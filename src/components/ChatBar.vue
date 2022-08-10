@@ -1,16 +1,22 @@
 <template>
   <div class="bg-primary p-4" id="chatBar">
-    <form action="" @submit.prevent="">
+    <form @submit.prevent="sendMessage">
       <div class="row justify-content-center">
         <div class="col-12 d-flex gap-2">
           <input
             type="text"
             class="form-control form-control-lg"
             placeholder="Type your message"
+            v-model="message"
             aria-label="Message"
           />
-
-          <button class="btn bt-lg btn-dark" type="submit">Enter</button>
+          <button
+            class="btn bt-lg btn-dark"
+            type="submit"
+            @submit.prevent="sendMessage"
+          >
+            Enter
+          </button>
         </div>
       </div>
     </form>
@@ -20,6 +26,40 @@
 <script>
 export default {
   name: "ChatBar",
+  data() {
+    return {
+      arrMessages: [],
+      message: "",
+    };
+  },
+  mounted() {
+    this.arrMessages = this.$helpers.getMessagesFromMemory();
+  },
+  computed: {
+    messageObj() {
+      return {
+        userId: 3,
+        message: this.message,
+      };
+    },
+  },
+  methods: {
+
+    async saveMessageInMemory() {
+      const parsed = JSON.stringify(this.arrMessages);
+      await localStorage.setItem("chatRoomMessages", parsed);
+    },
+
+    sendMessage() {
+      if (!this.message) {
+        return;
+      }
+      this.arrMessages.push(this.messageObj);
+      this.saveMessageInMemory().then((val) => {
+        this.message = "";
+      });
+    },
+  },
 };
 </script>
 
