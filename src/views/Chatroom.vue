@@ -7,7 +7,10 @@
         </div>
       </div>
       <div class="row bg-light" id="appBody">
-        <div class="col-md-12 d-flex flex-column">
+        <div
+          class="col-md-12 d-flex flex-column"
+          style="height: calc(100vh - 10px)"
+        >
           <div class="message-board-wrapper">
             <div class="overflow-container">
               <div class="" id="messageBoard">
@@ -34,7 +37,7 @@ import ChatBar from "@/components/ChatBar.vue";
 import MessageTile from "@/components/MessageTile.vue";
 
 export default {
-  name: "Home",
+  name: "Chatroom",
   components: { ChatBar, MessageTile },
   data() {
     return {

@@ -8,7 +8,6 @@
             class="form-control form-control-lg"
             placeholder="Type your message"
             v-model="message"
-            aria-label="Message"
           />
           <button
             class="btn bt-lg btn-dark"
