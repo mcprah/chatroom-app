@@ -49,13 +49,13 @@ export default {
   computed: {
     userData: function () {
       return {
-        uid: this.getUUID(),
+        uid: this.getUID(),
         name: this.userName,
       };
     },
   },
   methods: {
-    getUUID() {
+    getUID() {
       return Math.floor(Math.random() * 3000);
     },
 
@@ -69,7 +69,9 @@ export default {
         return;
       }
 
+      this.usersInRoom = this.$helpers.getUsers();
       this.usersInRoom.push(this.userData);
+
       this.saveUserDataInMemory().then(() => {
         this.$router.replace({
           path: "/chatroom",

@@ -1,5 +1,10 @@
 
 export default {
+    getTabUserData() {
+        const userUID = this.$route.query;
+        console.log(userUID);
+       
+    },
     getUsers() {
         if (localStorage.getItem("usersInRoom")) {
             try {

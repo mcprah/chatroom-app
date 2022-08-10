@@ -34,7 +34,8 @@ export default {
   },
   mounted() {
     this.arrMessages = this.$helpers.getMessagesFromMemory();
-    this.userData = { id: "2", name: "Mark" };
+    const singleName = this.$route.query.name.split(" ")[0];
+    this.userData = { id: this.$route.query.uid, name: singleName };
   },
   computed: {
     messageObj() {
@@ -57,7 +58,7 @@ export default {
       if (!this.message) {
         return;
       }
-
+      this.arrMessages = this.$helpers.getMessagesFromMemory();
       this.arrMessages.push(this.messageObj);
       this.saveMessageInMemory().then((val) => {
         this.message = "";

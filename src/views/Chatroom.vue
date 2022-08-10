@@ -9,7 +9,7 @@
       <div class="row bg-light" id="appBody">
         <div
           class="col-md-12 d-flex flex-column"
-          style="height: calc(100vh - 10px)"
+          style="height: calc(100vh - 8px)"
         >
           <div class="message-board-wrapper">
             <div class="overflow-container">
@@ -17,7 +17,7 @@
                 <MessageTile
                   v-for="(messageData, idx) in arrMessages"
                   :key="idx"
-                  :fromSelf="true"
+                  :fromSelf="tabUser.uid == messageData.user.id"
                   :userName="messageData.user.name"
                   :message="messageData.message"
                 />
@@ -42,12 +42,19 @@ export default {
   data() {
     return {
       arrMessages: [],
-      userData: {},
     };
   },
   mounted() {
     this.arrMessages = this.$helpers.getMessagesFromMemory();
-    this.userData = { id: "2", name: "Mark" };
+    this.refreshChat();
+  },
+  computed: {
+    tabUser: function () {
+      return {
+        uid: this.$route.query.uid,
+        name: this.userName,
+      };
+    },
   },
   watch: {
     arrMessages: function (value) {
@@ -58,6 +65,24 @@ export default {
     handleMessageChange(messages) {
       console.log(messages);
       this.arrMessages = messages;
+    },
+    refreshChat() {
+      setInterval(async function () {
+        if (localStorage.getItem("chatRoomMessages")) {
+          let messagesFromLocalStorage = [];
+          try {
+            messagesFromLocalStorage = await JSON.parse(
+              localStorage.getItem("chatRoomMessages")
+            );
+          } catch (e) {
+            // console.log(e);
+          }
+          // console.log(messagesFromLocalStorage.length);
+          if (this.arrMessages.length != messagesFromLocalStorage.length) {
+            this.arrMessages = await messagesFromLocalStorage;
+          }
+        }
+      }, 5000);
     },
   },
 };
