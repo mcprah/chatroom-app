@@ -30,30 +30,32 @@ export default {
     return {
       arrMessages: [],
       message: "",
+      userData: {},
     };
   },
   mounted() {
     this.arrMessages = this.$helpers.getMessagesFromMemory();
+    this.userData = { id: "2", name: "Mark" };
   },
   computed: {
     messageObj() {
       return {
-        userId: 3,
+        user: this.userData,
         message: this.message,
       };
     },
   },
   methods: {
-
     async saveMessageInMemory() {
       const parsed = JSON.stringify(this.arrMessages);
-      await localStorage.setItem("chatRoomMessages", parsed);
+      localStorage.setItem("chatRoomMessages", parsed);
     },
 
     sendMessage() {
       if (!this.message) {
         return;
       }
+
       this.arrMessages.push(this.messageObj);
       this.saveMessageInMemory().then((val) => {
         this.message = "";

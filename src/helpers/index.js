@@ -11,5 +11,6 @@ export default {
                 localStorage.removeItem("chatRoomMessages");
             }
         }
+        return [];
     },
 }
