@@ -10,17 +10,14 @@
         <div class="col-md-12 d-flex flex-column">
           <div class="flex-grow-1" id="messageBoard">
             <MessageTile
-              userName="Mark"
-              message=" Lorem ipsum dolor sit, amet consectetur adipisicing elit. Atque, fugit?"
-            />
-
-            <MessageTile
+              v-for="(messageData, idx) in arrMessages"
+              :key="idx"
               :fromSelf="true"
-              userName="Beatrice"
-              message="Lorem ipsum dolor sit amet consectetur adipisicin"
+              :userName="messageData.user.name"
+              :message="messageData.message"
             />
           </div>
-          <ChatBar class="mb-3 mt-5" />
+          <ChatBar class="mb-3 mt-5" @sendMessage="handleMessageChange" />
         </div>
       </div>
     </div>
@@ -34,6 +31,28 @@ import MessageTile from "@/components/MessageTile.vue";
 export default {
   name: "Home",
   components: { ChatBar, MessageTile },
+  data() {
+    return {
+      arrMessages: [],
+      userData: {},
+    };
+  },
+  mounted() {
+    this.arrMessages = this.$helpers.getMessagesFromMemory();
+    this.userData = { id: "2", name: "Mark" };
+  },
+  watch: {
+    arrMessages: function (value) {
+      
+      return value;
+    },
+  },
+  methods: {
+    handleMessageChange(messages) {
+      console.log(messages);
+      this.arrMessages = messages;
+    },
+  },
 };
 </script>
 

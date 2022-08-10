@@ -1,6 +1,6 @@
 <template>
   <div class="bg-primary p-4" id="chatBar">
-    <form @submit.prevent="sendMessage">
+    <form @submit.prevent="emitMessage">
       <div class="row justify-content-center">
         <div class="col-12 d-flex gap-2">
           <input
@@ -46,6 +46,9 @@ export default {
     },
   },
   methods: {
+    emitMessage(event) {
+      this.$emit("sendMessage", this.sendMessage());
+    },
     async saveMessageInMemory() {
       const parsed = JSON.stringify(this.arrMessages);
       localStorage.setItem("chatRoomMessages", parsed);
@@ -60,6 +63,7 @@ export default {
       this.saveMessageInMemory().then((val) => {
         this.message = "";
       });
+      return this.$helpers.getMessagesFromMemory();
     },
   },
 };
