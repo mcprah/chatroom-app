@@ -9,8 +9,16 @@
       <div class="row bg-light" id="appBody">
         <div class="col-md-12 d-flex flex-column">
           <div class="flex-grow-1" id="messageBoard">
-            <MessageTile userName="Mark" />
-            <MessageTile :fromSelf="true" userName="Beatrice" />
+            <MessageTile
+              userName="Mark"
+              message=" Lorem ipsum dolor sit, amet consectetur adipisicing elit. Atque, fugit?"
+            />
+
+            <MessageTile
+              :fromSelf="true"
+              userName="Beatrice"
+              message="Lorem ipsum dolor sit amet consectetur adipisicin"
+            />
           </div>
           <ChatBar class="mb-3 mt-5" />
         </div>

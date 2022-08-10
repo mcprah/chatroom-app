@@ -2,7 +2,7 @@
   <div class="message-tile">
     <div class="message shadow-sm" :class="[fromSelf ? 'order-1' : 'order-2']">
       <small class="text-primary" v-if="!fromSelf">{{ userName }}</small>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicin</p>
+      <p>{{message}}</p>
     </div>
     <div
       class="user-avatar bg-secondary text-light fw-bold"
@@ -19,6 +19,7 @@ export default {
   props: {
     fromSelf: { type: Boolean, default: false },
     userName: { type: String, required: true },
+    message: { type: String, required: true },
   },
   computed: {
     userInitial() {
