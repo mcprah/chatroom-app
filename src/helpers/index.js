@@ -18,7 +18,7 @@ export default {
         return [];
     },
 
-    getMessagesFromMemory() {
+     getMessagesFromMemory() {
         if (localStorage.getItem("chatRoomMessages")) {
             try {
                 return JSON.parse(

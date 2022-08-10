@@ -1,12 +1,18 @@
 <template>
-  <div class="message-tile">
-    <div class="message shadow-sm" :class="[fromSelf ? 'order-1' : 'order-2']">
+  <div
+    class="message-tile"
+    :class="[fromSelf ? 'justify-content-end' : 'justify-content-start']"
+  >
+    <div
+      class="message shadow-sm"
+      :class="[fromSelf ? 'order-1 text-right' : 'order-2']"
+    >
       <small class="text-primary" v-if="!fromSelf">{{ userName }}</small>
-      <p>{{message}}</p>
+      <p class="m-0">{{ message }}</p>
     </div>
     <div
       class="user-avatar bg-secondary text-light fw-bold"
-      :class="[fromSelf ? 'order-2' : 'order-1']"
+      :class="[fromSelf ? 'order-2 ms-2' : 'order-1 me-2']"
     >
       {{ userInitial }}
     </div>
@@ -32,13 +38,13 @@ export default {
 <style lang="scss" scoped>
 .message-tile {
   display: flex;
-  justify-content: space-between;
+
   .message {
-    max-width: 425px;
-    width: calc(100% - 64px);
+    max-width: 284px;
     background: #ffffff;
     padding: 12px 16px;
     border-radius: 8px;
+    position: relative;
     small {
       margin-bottom: 8px;
     }

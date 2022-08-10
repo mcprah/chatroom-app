@@ -17,11 +17,13 @@
                 <MessageTile
                   v-for="(messageData, idx) in arrMessages"
                   :key="idx"
+                  :id="(tileElementId = `tile${idx + 1}`)"
                   :fromSelf="tabUser.uid == messageData.user.id"
                   :userName="messageData.user.name"
                   :message="messageData.message"
                 />
               </div>
+              <div id="scrollTarget"></div>
             </div>
           </div>
 
@@ -42,6 +44,7 @@ export default {
   data() {
     return {
       arrMessages: [],
+      tileElementId: "",
     };
   },
   mounted() {
@@ -62,9 +65,13 @@ export default {
     },
   },
   methods: {
+    scrollToBottom() {
+      var scrollTarget = document.getElementById(this.tileElementId);
+      scrollTarget.scrollIntoView({ behavior: "smooth", block: "end" });
+    },
     handleMessageChange(messages) {
-      console.log(messages);
       this.arrMessages = messages;
+      this.scrollToBottom();
     },
     refreshChat() {
       setInterval(async function () {
@@ -74,12 +81,9 @@ export default {
             messagesFromLocalStorage = await JSON.parse(
               localStorage.getItem("chatRoomMessages")
             );
+            this.arrMessages = await messagesFromLocalStorage;
           } catch (e) {
             // console.log(e);
-          }
-          // console.log(messagesFromLocalStorage.length);
-          if (this.arrMessages.length != messagesFromLocalStorage.length) {
-            this.arrMessages = await messagesFromLocalStorage;
           }
         }
       }, 5000);
@@ -117,7 +121,7 @@ export default {
       #messageBoard {
         display: flex;
         flex-direction: column;
-        gap: 18px;
+        gap: 8px;
         overflow-y: scroll;
         max-height: calc(100vh - 120px);
         padding: 12px;

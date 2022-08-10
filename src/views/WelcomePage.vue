@@ -86,5 +86,7 @@ export default {
 <style lang="scss" scoped>
 #welcomePage {
   height: 100vh;
+  max-width: 468px;
+  width: 468px;
 }
 </style>
