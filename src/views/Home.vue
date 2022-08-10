@@ -8,16 +8,21 @@
       </div>
       <div class="row bg-light" id="appBody">
         <div class="col-md-12 d-flex flex-column">
-          <div class="flex-grow-1" id="messageBoard">
-            <MessageTile
-              v-for="(messageData, idx) in arrMessages"
-              :key="idx"
-              :fromSelf="true"
-              :userName="messageData.user.name"
-              :message="messageData.message"
-            />
+          <div class="message-board-wrapper">
+            <div class="overflow-container">
+              <div class="" id="messageBoard">
+                <MessageTile
+                  v-for="(messageData, idx) in arrMessages"
+                  :key="idx"
+                  :fromSelf="true"
+                  :userName="messageData.user.name"
+                  :message="messageData.message"
+                />
+              </div>
+            </div>
           </div>
-          <ChatBar class="mb-3 mt-5" @sendMessage="handleMessageChange" />
+
+          <ChatBar class="mb-3" @sendMessage="handleMessageChange" />
         </div>
       </div>
     </div>
@@ -43,7 +48,6 @@ export default {
   },
   watch: {
     arrMessages: function (value) {
-      
       return value;
     },
   },
@@ -71,13 +75,25 @@ export default {
   }
 
   #appBody {
-    height: calc(100vh - 10px);
-
-    #messageBoard {
+    .message-board-wrapper {
       display: flex;
-      flex-direction: column;
-      gap: 24px;
-      justify-content: flex-end;
+      flex: 1;
+      min-height: 0px;
+      align-items: flex-end;
+
+      .overflow-container {
+        flex: 1;
+        overflow: auto;
+      }
+
+      #messageBoard {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+        overflow-y: scroll;
+        max-height: calc(100vh - 120px);
+        padding: 12px;
+      }
     }
   }
 }
