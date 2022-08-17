@@ -1,7 +1,7 @@
 <template>
   <div class="message-board-wrapper">
     <div class="overflow-container">
-      <div class="" id="messageBoard" >
+      <div class="" id="messageBoard">
         <MessageTile
           v-for="(messageData, idx) in messages"
           :key="idx"
@@ -25,15 +25,26 @@ export default {
     user: { type: Object },
   },
   data() {
-    return {};
+    return {
+      messageBoardScrollHeight: 0,
+    };
   },
-
   computed: {
     messages: function () {
       return this.$helpers.getMessagesFromMemory();
     },
+    messageBoardEl: function () {
+      return document.getElementById("messageBoard");
+    },
   },
-  
+  mounted() {
+    this.scrollToEnd();
+  },
+  methods: {
+    scrollToEnd() {
+      this.messageBoardEl.scrollTop = this.messageBoardEl.scrollHeight;
+    },
+  },
 };
 </script>
 
@@ -52,7 +63,7 @@ export default {
   #messageBoard {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    // gap: 28px;
     overflow-y: scroll;
     max-height: calc(100vh - 120px);
     padding: 12px;

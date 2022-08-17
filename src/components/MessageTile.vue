@@ -5,14 +5,14 @@
   >
     <div
       class="message shadow-sm"
-      :class="[fromSelf ? 'order-1 text-right' : 'order-2']"
+      :class="[fromSelf ? 'order-1 text-right from-self' : 'order-2']"
     >
       <small class="text-primary" v-if="!fromSelf">{{ userName }}</small>
       <p class="m-0">{{ message }}</p>
     </div>
     <div
       class="user-avatar bg-secondary text-light fw-bold"
-      :class="[fromSelf ? 'order-2 ms-2' : 'order-1 me-2']"
+      :class="[fromSelf ? 'order-2 ms-2 ' : 'order-1 me-2']"
     >
       {{ userInitial }}
     </div>
@@ -38,15 +38,31 @@ export default {
 <style lang="scss" scoped>
 .message-tile {
   display: flex;
+  position: relative;
+  &:not(:last-of-type) {
+    margin-bottom: 30px;
+  }
+  &:last-of-type {
+    margin-top: 30px;
+  }
 
   .message {
     max-width: 284px;
     background: #ffffff;
     padding: 12px 16px;
-    border-radius: 8px;
-    position: relative;
+    border-radius: 18px 18px 18px 0px;
+    position: absolute;
+    bottom: 17px;
+    left: 60px;
+
     small {
       margin-bottom: 8px;
+    }
+    &.from-self {
+      border-radius: 18px 18px 0 18px;
+      bottom: 24px;
+      left: unset;
+      right: 60px;
     }
   }
 
