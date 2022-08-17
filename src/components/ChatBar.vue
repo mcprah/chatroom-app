@@ -63,7 +63,7 @@ export default {
       this.saveMessageInMemory().then((val) => {
         this.message = "";
       });
-      return this.$helpers.getMessagesFromMemory();
+      // return this.$helpers.getMessagesFromMemory();
     },
   },
 };

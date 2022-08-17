@@ -10,7 +10,7 @@
           align-items-center
         "
       >
-        <h1>Welcome!</h1>
+        <h1>Welcome Buddy!</h1>
         <p class="fw-light text-center text-sm mb-4">
           You will be identified in the chatroom by the name you enter here
         </p>
