@@ -63,10 +63,10 @@ export default {
   #messageBoard {
     display: flex;
     flex-direction: column;
-    // gap: 28px;
     overflow-y: scroll;
     max-height: calc(100vh - 120px);
     padding: 12px;
+
   }
 }
 </style>

@@ -40,29 +40,25 @@ export default {
   display: flex;
   position: relative;
   &:not(:last-of-type) {
-    margin-bottom: 30px;
+    margin-bottom: 14px;
   }
   &:last-of-type {
-    margin-top: 30px;
+    margin-bottom: 18px;
   }
 
   .message {
     max-width: 284px;
     background: #ffffff;
     padding: 12px 16px;
-    border-radius: 18px 18px 18px 0px;
-    position: absolute;
-    bottom: 17px;
-    left: 60px;
+    border-radius: 18px;
+    border-top-left-radius: 0;
 
     small {
       margin-bottom: 8px;
     }
     &.from-self {
-      border-radius: 18px 18px 0 18px;
-      bottom: 24px;
-      left: unset;
-      right: 60px;
+      border-top-right-radius: 0;
+      border-top-left-radius: 18px;
     }
   }
 

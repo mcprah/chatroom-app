@@ -48,21 +48,12 @@ export default {
     },
   },
   methods: {
-    scrollToElement() {
-      console.log(this.$refs);
-      const el = this.$refs.scrollToMe;
-
-      if (el) {
-        el.scrollIntoView({ behavior: "smooth" });
-      }
-    },
     handleMessageChange(messages) {
       this.arrMessages = messages;
       this.forceMessageBoardRerender();
     },
     forceMessageBoardRerender() {
       this.refreshToken += 1;
-      this.scrollToElement();
     },
     refreshMessageBoard() {
       setInterval(this.forceMessageBoardRerender, 5000);
