@@ -1,31 +1,13 @@
 <template>
   <div id="chatRoom">
     <div class="container">
-      <div class="row bg-primary" id="appBar">
-        <div class="col-md-12 text-light">
-          <!-- <h1 class="h5 m-0 fw-bold">CHATRUM</h1> -->
-        </div>
-      </div>
+      <div class="row bg-primary" id="appBar"></div>
       <div class="row bg-light" id="appBody">
         <div
           class="col-md-12 d-flex flex-column"
           style="height: calc(100vh - 8px)"
         >
-          <div class="message-board-wrapper">
-            <div class="overflow-container">
-              <div class="" id="messageBoard">
-                <MessageTile
-                  v-for="(messageData, idx) in arrMessages"
-                  :key="idx"
-                  :id="(tileElementId = `tile${idx + 1}`)"
-                  :fromSelf="tabUser.uid == messageData.user.id"
-                  :userName="messageData.user.name"
-                  :message="messageData.message"
-                />
-              </div>
-              <div id="scrollTarget"></div>
-            </div>
-          </div>
+          <MessageBoard :user="tabUser" :key="refreshToken" ref="scrollToMe" />
 
           <ChatBar class="mb-3" @sendMessage="handleMessageChange" />
         </div>
@@ -36,20 +18,26 @@
 
 <script>
 import ChatBar from "@/components/ChatBar.vue";
-import MessageTile from "@/components/MessageTile.vue";
+import MessageBoard from "@/components/MessageBoard.vue";
 
 export default {
   name: "Chatroom",
-  components: { ChatBar, MessageTile },
+  components: { ChatBar, MessageBoard },
   data() {
     return {
       arrMessages: [],
+      refreshToken: 0,
       tileElementId: "",
     };
   },
+  watch: {
+    arrMessages: function (value) {
+      return value;
+    },
+  },
   mounted() {
     this.arrMessages = this.$helpers.getMessagesFromMemory();
-    this.refreshChat();
+    this.refreshMessageBoard();
   },
   computed: {
     tabUser: function () {
@@ -59,34 +47,25 @@ export default {
       };
     },
   },
-  watch: {
-    arrMessages: function (value) {
-      return value;
-    },
-  },
   methods: {
-    scrollToBottom() {
-      var scrollTarget = document.getElementById(this.tileElementId);
-      scrollTarget.scrollIntoView({ behavior: "smooth", block: "end" });
+    scrollToElement() {
+      console.log(this.$refs);
+      const el = this.$refs.scrollToMe;
+
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth" });
+      }
     },
     handleMessageChange(messages) {
       this.arrMessages = messages;
-      this.scrollToBottom();
+      this.forceMessageBoardRerender();
     },
-    refreshChat() {
-      setInterval(async function () {
-        if (localStorage.getItem("chatRoomMessages")) {
-          let messagesFromLocalStorage = [];
-          try {
-            messagesFromLocalStorage = await JSON.parse(
-              localStorage.getItem("chatRoomMessages")
-            );
-            this.arrMessages = await messagesFromLocalStorage;
-          } catch (e) {
-            // console.log(e);
-          }
-        }
-      }, 5000);
+    forceMessageBoardRerender() {
+      this.refreshToken += 1;
+      this.scrollToElement();
+    },
+    refreshMessageBoard() {
+      setInterval(this.forceMessageBoardRerender, 5000);
     },
   },
 };
@@ -106,28 +85,28 @@ export default {
     align-items: center;
   }
 
-  #appBody {
-    .message-board-wrapper {
-      display: flex;
-      flex: 1;
-      min-height: 0px;
-      align-items: flex-end;
+  // #appBody {
+  //   .message-board-wrapper {
+  //     display: flex;
+  //     flex: 1;
+  //     min-height: 0px;
+  //     align-items: flex-end;
 
-      .overflow-container {
-        flex: 1;
-        overflow: auto;
-      }
+  //     .overflow-container {
+  //       flex: 1;
+  //       overflow: auto;
+  //     }
 
-      #messageBoard {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-        overflow-y: scroll;
-        max-height: calc(100vh - 120px);
-        padding: 12px;
-      }
-    }
-  }
+  //     #messageBoard {
+  //       display: flex;
+  //       flex-direction: column;
+  //       gap: 8px;
+  //       overflow-y: scroll;
+  //       max-height: calc(100vh - 120px);
+  //       padding: 12px;
+  //     }
+  //   }
+  // }
 }
 </style>
 
